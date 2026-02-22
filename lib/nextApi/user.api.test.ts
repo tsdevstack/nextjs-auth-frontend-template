@@ -32,19 +32,4 @@ describe("UserAPI", () => {
     });
   });
 
-  describe("profile", () => {
-    it("should GET /api/user/profile", async () => {
-      const mockProfile = {
-        userId: "user-123",
-        displayName: "JohnD",
-        bio: "Hello world",
-      };
-      mockClient.get.mockResolvedValue({ data: mockProfile });
-
-      const result = await userAPI.profile();
-
-      expect(mockClient.get).toHaveBeenCalledWith("/api/user/profile");
-      expect(result.data).toEqual(mockProfile);
-    });
-  });
 });

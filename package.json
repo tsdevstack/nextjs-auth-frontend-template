@@ -1,5 +1,5 @@
 {
-  "name": "frontend",
+  "name": "{{SERVICE_NAME}}",
   "version": "0.0.1",
   "description": "Next.js frontend with authentication.",
   "author": "{{AUTHOR}}",
@@ -37,7 +37,6 @@
     "@radix-ui/react-separator": "^1.1.7",
     "@radix-ui/react-slot": "^1.2.3",
     "@shared/auth-service-client": "*",
-    "@shared/bff-service-client": "*",
     "@tsdevstack/react-bot-detection": "*",
     "axios": "^1.12.2",
     "class-variance-authority": "^0.7.1",

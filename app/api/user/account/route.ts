@@ -20,7 +20,6 @@ export async function GET(): Promise<NextResponse<UserDto | { error: string }>> 
 
     return NextResponse.json(response.data);
   } catch (error) {
-    console.error("Account error:", error);
     const status = (error as AxiosError)?.response?.status || 500;
     return NextResponse.json({ error: "Failed to fetch account" }, { status });
   }
