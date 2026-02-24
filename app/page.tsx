@@ -69,6 +69,17 @@ export default function HomePage() {
           <h2 className="text-2xl font-bold mb-6">Links</h2>
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 text-sm">
             <a
+              href="https://tsdevstack.dev"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="p-4 border rounded-lg hover:bg-muted/50 transition-colors text-left"
+            >
+              <span className="font-medium block mb-1">Documentation</span>
+              <span className="text-muted-foreground">
+                Guides, API reference, and tutorials
+              </span>
+            </a>
+            <a
               href="https://github.com/tsdevstack"
               target="_blank"
               rel="noopener noreferrer"
