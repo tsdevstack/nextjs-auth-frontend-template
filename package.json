@@ -60,7 +60,7 @@
     "@types/react-dom": "^19",
     "@vitest/coverage-v8": "^4.0.16",
     "eslint": "^9",
-    "eslint-config-next": "15.3.6",
+    "eslint-config-next": "16.1.6",
     "jsdom": "^26.1.0",
     "shadcn": "^2.9.0",
     "tailwindcss": "^4",
