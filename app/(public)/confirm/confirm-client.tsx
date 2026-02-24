@@ -25,7 +25,7 @@ export function ConfirmClient() {
     // Call the confirmation API
     const confirmEmail = async () => {
       try {
-        authAPI.confirm(token);
+        await authAPI.confirm(token);
 
         setStatus("success");
         setMessage("Email confirmed successfully!");
