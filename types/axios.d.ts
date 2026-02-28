@@ -1,4 +1,3 @@
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
 import { AxiosRequestConfig, InternalAxiosRequestConfig } from "axios";
 
 declare module "axios" {

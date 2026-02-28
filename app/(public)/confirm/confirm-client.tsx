@@ -8,19 +8,16 @@ import { authAPI } from "@/lib/nextApi/auth.api";
 export function ConfirmClient() {
   const searchParams = useSearchParams();
   const router = useRouter();
+  const token = searchParams.get("token");
   const [status, setStatus] = useState<"loading" | "success" | "error">(
-    "loading"
+    token ? "loading" : "error"
   );
-  const [message, setMessage] = useState("");
+  const [message, setMessage] = useState(
+    token ? "" : "No confirmation token provided"
+  );
 
   useEffect(() => {
-    const token = searchParams.get("token");
-
-    if (!token) {
-      setStatus("error");
-      setMessage("No confirmation token provided");
-      return;
-    }
+    if (!token) return;
 
     // Call the confirmation API
     const confirmEmail = async () => {
@@ -45,7 +42,7 @@ export function ConfirmClient() {
     };
 
     confirmEmail();
-  }, [searchParams, router]);
+  }, [token, router]);
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-background">
