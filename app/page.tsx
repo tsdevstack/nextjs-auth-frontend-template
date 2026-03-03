@@ -10,12 +10,14 @@ export default function HomePage() {
       <main className="min-h-screen flex flex-col items-center px-4 py-16">
         <section className="mb-20 max-w-3xl text-center">
           <h1 className="text-4xl sm:text-5xl font-bold mb-4">tsdevstack</h1>
+          <p className="text-2xl sm:text-3xl font-bold mb-2">
+            Infrastructure as Framework
+          </p>
           <p className="text-lg sm:text-xl text-muted-foreground mb-2">
-            Full-stack TypeScript framework for production-ready microservices.
+            Full-stack, cloud-native, AI-native TypeScript microservices.
           </p>
           <p className="text-muted-foreground mb-8">
-            NestJS backends, Next.js frontends, Kong gateway, PostgreSQL, Redis
-            — deployed with one command.
+            From zero to production in an hour, not months.
           </p>
           <div className="flex gap-4 justify-center">
             <Button size="lg" asChild>
