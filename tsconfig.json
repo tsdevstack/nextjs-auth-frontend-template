@@ -23,31 +23,30 @@
         "name": "next"
       }
     ],
-    "baseUrl": ".",
     "paths": {
       "@/*": [
         "./*"
       ],
       "@/components/*": [
-        "components/*"
+        "./components/*"
       ],
       "@/components/ui/*": [
-        "components/ui/*"
+        "./components/ui/*"
       ],
       "@/lib/*": [
-        "lib/*"
+        "./lib/*"
       ],
       "@/lib/utils": [
-        "lib/utils.ts"
+        "./lib/utils.ts"
       ],
       "@/hooks/*": [
-        "hooks/*"
+        "./hooks/*"
       ],
       "@/providers/*": [
-        "providers/*"
+        "./providers/*"
       ],
       "@/types/*": [
-        "types/*"
+        "./types/*"
       ]
     }
   },
