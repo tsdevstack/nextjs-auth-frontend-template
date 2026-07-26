@@ -28,7 +28,6 @@ export default function ResetPasswordClient({
     // Read token directly from browser URL (avoids Next.js hydration issues)
     const params = new URLSearchParams(window.location.search);
     const urlToken = params.get("token");
-    // eslint-disable-next-line react-hooks/set-state-in-effect -- reading from browser URL on mount, not derivable from React state
     setToken(urlToken);
     setInitialized(true);
 

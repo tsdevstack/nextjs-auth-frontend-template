@@ -21,7 +21,7 @@ export const signupFormSchema = z
     password: passwordSchema,
     confirmPassword: z.string().min(1, "Please confirm your password"),
     acceptedTerms: z.literal(true, {
-      errorMap: () => ({ message: "You must accept the terms" }),
+      error: "You must accept the terms",
     }),
   })
   .refine((data) => data.password === data.confirmPassword, {

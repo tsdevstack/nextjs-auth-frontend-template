@@ -10,7 +10,7 @@ describe("emailSchema", () => {
     const result = emailSchema.safeParse("invalid-email");
     expect(result.success).toBe(false);
     if (!result.success) {
-      expect(result.error.errors[0].message).toBe("Enter a valid email");
+      expect(result.error.issues[0].message).toBe("Enter a valid email");
     }
   });
 
@@ -28,7 +28,7 @@ describe("passwordSchema", () => {
     const result = passwordSchema.safeParse("Short1A");
     expect(result.success).toBe(false);
     if (!result.success) {
-      expect(result.error.errors[0].message).toContain("at least 8");
+      expect(result.error.issues[0].message).toContain("at least 8");
     }
   });
 
@@ -36,7 +36,7 @@ describe("passwordSchema", () => {
     const result = passwordSchema.safeParse("ALLUPPERCASE123");
     expect(result.success).toBe(false);
     if (!result.success) {
-      expect(result.error.errors[0].message).toContain("lowercase");
+      expect(result.error.issues[0].message).toContain("lowercase");
     }
   });
 
@@ -44,7 +44,7 @@ describe("passwordSchema", () => {
     const result = passwordSchema.safeParse("alllowercase123");
     expect(result.success).toBe(false);
     if (!result.success) {
-      expect(result.error.errors[0].message).toContain("uppercase");
+      expect(result.error.issues[0].message).toContain("uppercase");
     }
   });
 
@@ -52,7 +52,7 @@ describe("passwordSchema", () => {
     const result = passwordSchema.safeParse("NoNumbersHere");
     expect(result.success).toBe(false);
     if (!result.success) {
-      expect(result.error.errors[0].message).toContain("number");
+      expect(result.error.issues[0].message).toContain("number");
     }
   });
 });
@@ -66,7 +66,7 @@ describe("nameSchema", () => {
     const result = nameSchema.safeParse("");
     expect(result.success).toBe(false);
     if (!result.success) {
-      expect(result.error.errors[0].message).toBe("This field is required");
+      expect(result.error.issues[0].message).toBe("This field is required");
     }
   });
 });
