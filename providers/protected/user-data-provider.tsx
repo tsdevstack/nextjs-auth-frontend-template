@@ -12,7 +12,8 @@ const initialData: UserDto = {
   confirmed: false,
   status: "INACTIVE",
   createdAt: new Date().toISOString(),
-  role: "USER",
+  systemRole: "USER",
+  roles: [],
 };
 
 interface UserDataContextProps {
