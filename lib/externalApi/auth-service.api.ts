@@ -1,4 +1,5 @@
 import { Api } from "@shared/auth-service-client";
+import { forwardClientIp } from "@/lib/utils/forward-client-ip";
 
 // Initialize and export the generated API client instance
 // This client is configured with the Kong Gateway URL
@@ -14,3 +15,6 @@ export const authClient = new Api<{ token: string }>({
       : {};
   },
 });
+
+// Names the visitor on each call, so Kong rate-limits per visitor
+authClient.instance.interceptors.request.use(forwardClientIp);

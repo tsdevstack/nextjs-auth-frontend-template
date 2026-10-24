@@ -122,7 +122,7 @@ export function ResetPasswordForm({ token, onSubmit }: ResetPasswordFormProps) {
         showDebugPanel={process.env.NODE_ENV === "development"}
       >
         <div className="space-y-4">
-          <div>
+          <div className="space-y-2">
             <Label htmlFor="password">New Password</Label>
             <div className="relative">
               <Input
@@ -153,7 +153,7 @@ export function ResetPasswordForm({ token, onSubmit }: ResetPasswordFormProps) {
             )}
           </div>
 
-          <div>
+          <div className="space-y-2">
             <Label htmlFor="confirmPassword">Confirm New Password</Label>
             <div className="relative">
               <Input
