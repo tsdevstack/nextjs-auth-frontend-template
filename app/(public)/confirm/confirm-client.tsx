@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useSearchParams, useRouter } from "next/navigation";
 import { Loader2, CheckCircle, XCircle } from "lucide-react";
 import { authAPI } from "@/lib/nextApi/auth.api";
@@ -15,9 +15,13 @@ export function ConfirmClient() {
   const [message, setMessage] = useState(
     token ? "" : "No confirmation token provided"
   );
+  // One request per token: Strict Mode mounts the component twice in
+  // development, and a second confirm call fails on the already used token
+  const requestedToken = useRef<string | null>(null);
 
   useEffect(() => {
-    if (!token) return;
+    if (!token || requestedToken.current === token) return;
+    requestedToken.current = token;
 
     // Call the confirmation API
     const confirmEmail = async () => {
