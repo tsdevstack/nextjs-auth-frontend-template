@@ -60,26 +60,31 @@ describe("forwardClientIp", () => {
     expect(config.headers.has("X-Tsdevstack-Frontend-Token")).toBe(false);
   });
 
-  it("should leave the call unchanged when no client IP header is configured", async () => {
+  it("should send the token only when no client IP header is configured", async () => {
     vi.stubEnv("TSDEVSTACK_CLIENT_IP_HEADER", "");
     incoming({ "x-azure-socketip": "203.0.113.7" });
 
     const config = await forwardClientIp(makeConfig());
 
     expect(config.headers.has("X-Tsdevstack-Client-IP")).toBe(false);
+    expect(config.headers.get("X-Tsdevstack-Frontend-Token")).toBe(
+      "frontend-token"
+    );
     expect(headers).not.toHaveBeenCalled();
   });
 
-  it("should leave the call unchanged when the request lacks the header", async () => {
+  it("should send the token only when the request lacks the header", async () => {
     incoming({});
 
     const config = await forwardClientIp(makeConfig());
 
     expect(config.headers.has("X-Tsdevstack-Client-IP")).toBe(false);
-    expect(config.headers.has("X-Tsdevstack-Frontend-Token")).toBe(false);
+    expect(config.headers.get("X-Tsdevstack-Frontend-Token")).toBe(
+      "frontend-token"
+    );
   });
 
-  it("should leave the call unchanged outside a request", async () => {
+  it("should send the token only outside a request", async () => {
     vi.mocked(headers).mockRejectedValue(
       new Error("`headers` was called outside a request scope")
     );
@@ -87,5 +92,8 @@ describe("forwardClientIp", () => {
     const config = await forwardClientIp(makeConfig());
 
     expect(config.headers.has("X-Tsdevstack-Client-IP")).toBe(false);
+    expect(config.headers.get("X-Tsdevstack-Frontend-Token")).toBe(
+      "frontend-token"
+    );
   });
 });

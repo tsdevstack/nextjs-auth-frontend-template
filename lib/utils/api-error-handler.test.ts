@@ -33,7 +33,7 @@ describe("handleApiError", () => {
       const error = new Error("Test error");
       handleApiError(error, "Fallback message");
 
-      expect(consoleSpy).toHaveBeenCalledWith("API error:", error);
+      expect(consoleSpy).toHaveBeenCalledWith("API error:", "Error: Test error");
     });
   });
 

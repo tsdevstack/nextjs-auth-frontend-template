@@ -1,4 +1,5 @@
 import { Api } from "@shared/auth-service-client";
+import { injectTraceContext } from "@tsdevstack/telemetry";
 import { forwardClientIp } from "@/lib/utils/forward-client-ip";
 
 // Initialize and export the generated API client instance
@@ -18,3 +19,5 @@ export const authClient = new Api<{ token: string }>({
 
 // Names the visitor on each call, so Kong rate-limits per visitor
 authClient.instance.interceptors.request.use(forwardClientIp);
+// Passes this request's trace on to Kong and the services
+authClient.instance.interceptors.request.use(injectTraceContext);

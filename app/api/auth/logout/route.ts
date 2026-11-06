@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from "next/server";
 import { authClient } from "@/lib/externalApi/auth-service.api";
 import { clearTokenCookies } from "@/lib/utils/token-cookies";
 import type { ReturnMessageDto } from "@shared/auth-service-client";
+import { describeError } from "@/lib/utils/describe-error";
 
 export async function POST(request: NextRequest): Promise<NextResponse<ReturnMessageDto | { error: string }>> {
   try {
@@ -24,13 +25,13 @@ export async function POST(request: NextRequest): Promise<NextResponse<ReturnMes
     try {
       await authClient.v1.logout({ refreshToken: refreshTokenFromRequest });
     } catch (logoutError) {
-      console.error("Auth service logout failed, but continuing:", logoutError);
+      console.error("Auth service logout failed, but continuing:", describeError(logoutError));
       // Continue anyway - local logout is more important
     }
 
     return nextResponse;
   } catch (error) {
-    console.error("Logout error:", error);
+    console.error("Logout error:", describeError(error));
 
     // Even on error, clear cookies and return success
     const errorResponse = NextResponse.json({

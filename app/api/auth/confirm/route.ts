@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { authClient } from "@/lib/externalApi/auth-service.api";
+import { describeError } from "@/lib/utils/describe-error";
 
 export async function POST(request: NextRequest): Promise<NextResponse> {
   try {
@@ -17,7 +18,7 @@ export async function POST(request: NextRequest): Promise<NextResponse> {
 
     return NextResponse.json({ message: "Email confirmed successfully" });
   } catch (error) {
-    console.error("Email confirmation error:", error);
+    console.error("Email confirmation error:", describeError(error));
 
     return NextResponse.json(
       { error: "Confirmation failed" },

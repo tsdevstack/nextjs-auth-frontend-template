@@ -103,7 +103,7 @@ User → Signup Form → /api/auth/signup → Auth Service
 ### Email Confirmation
 
 ```
-User clicks email link → /confirm?token=xxx
+User clicks email link → /confirm#token=xxx
                               │
                               ▼
                     /api/auth/confirm

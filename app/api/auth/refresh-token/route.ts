@@ -4,6 +4,7 @@ import { authClient } from "@/lib/externalApi/auth-service.api";
 import { setTokenCookies, clearTokenCookies } from "@/lib/utils/token-cookies";
 import { cookies } from "next/headers";
 import type { ReturnMessageDto } from "@shared/auth-service-client";
+import { describeError } from "@/lib/utils/describe-error";
 
 export async function POST(): Promise<
   NextResponse<ReturnMessageDto | { error: string }>
@@ -38,7 +39,7 @@ export async function POST(): Promise<
 
     return res;
   } catch (error) {
-    console.error("Token refresh error:", error);
+    console.error("Token refresh error:", describeError(error));
 
     if (axios.isAxiosError(error)) {
       if (error.response?.status === 401) {
@@ -50,7 +51,7 @@ export async function POST(): Promise<
             });
           }
         } catch (logoutError) {
-          console.error("Logout cleanup failed:", logoutError);
+          console.error("Logout cleanup failed:", describeError(logoutError));
           const errorRes = NextResponse.json(
             { error: "Token refresh failed and cleanup unsuccessful" },
             { status: 500 }

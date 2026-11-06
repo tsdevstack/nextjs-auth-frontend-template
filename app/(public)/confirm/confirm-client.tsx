@@ -1,30 +1,37 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-import { useSearchParams, useRouter } from "next/navigation";
+import { useRouter } from "next/navigation";
 import { Loader2, CheckCircle, XCircle } from "lucide-react";
 import { authAPI } from "@/lib/nextApi/auth.api";
+import { takeLinkToken } from "@/lib/utils/take-link-token";
 
 export function ConfirmClient() {
-  const searchParams = useSearchParams();
   const router = useRouter();
-  const token = searchParams.get("token");
   const [status, setStatus] = useState<"loading" | "success" | "error">(
-    token ? "loading" : "error"
+    "loading",
   );
-  const [message, setMessage] = useState(
-    token ? "" : "No confirmation token provided"
-  );
-  // One request per token: Strict Mode mounts the component twice in
+  const [message, setMessage] = useState("");
+  // One request per page load: Strict Mode runs the effect twice in
   // development, and a second confirm call fails on the already used token
-  const requestedToken = useRef<string | null>(null);
+  const requested = useRef(false);
 
   useEffect(() => {
-    if (!token || requestedToken.current === token) return;
-    requestedToken.current = token;
+    if (requested.current) return;
+    requested.current = true;
+
+    // The token is in the link after # (never sent to a server), so it's
+    // read here in the browser, then removed from the address bar
+    const token = takeLinkToken();
 
     // Call the confirmation API
     const confirmEmail = async () => {
+      if (!token) {
+        setStatus("error");
+        setMessage("No confirmation token provided");
+        return;
+      }
+
       try {
         await authAPI.confirm(token);
 
@@ -39,14 +46,14 @@ export function ConfirmClient() {
         setStatus("error");
 
         setMessage(
-          error instanceof Error ? error.message : "Confirmation failed"
+          error instanceof Error ? error.message : "Confirmation failed",
         );
         console.error("Confirmation error:", error);
       }
     };
 
     confirmEmail();
-  }, [token, router]);
+  }, [router]);
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-background">

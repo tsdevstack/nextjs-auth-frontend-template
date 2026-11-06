@@ -4,6 +4,7 @@ import { useState, useEffect, useRef } from "react";
 import { ResetPasswordForm } from "@/components/auth/reset-password-form";
 import { AxiosResponse } from "axios";
 import { type BotDetectionResult } from "@tsdevstack/react-bot-detection";
+import { takeLinkToken } from "@/lib/utils/take-link-token";
 
 interface ResetPasswordClientProps {
   onSubmit: (
@@ -25,16 +26,10 @@ export default function ResetPasswordClient({
     if (hasRun.current) return;
     hasRun.current = true;
 
-    // Read token directly from browser URL (avoids Next.js hydration issues)
-    const params = new URLSearchParams(window.location.search);
-    const urlToken = params.get("token");
-    setToken(urlToken);
+    // The token is in the link after # (never sent to a server), so it's
+    // read here in the browser, then removed from the address bar
+    setToken(takeLinkToken());
     setInitialized(true);
-
-    // Clear the token from URL for security (don't expose in address bar)
-    if (urlToken) {
-      window.history.replaceState({}, "", "/reset-password");
-    }
   }, []);
 
   // Show loading while initializing

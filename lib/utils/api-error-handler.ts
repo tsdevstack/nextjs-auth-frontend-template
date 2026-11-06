@@ -1,12 +1,13 @@
 import { NextResponse } from "next/server";
 import axios from "axios";
+import { describeError } from "./describe-error";
 
 /**
  * Handles errors from API routes by preserving the original status code
  * and error message from the backend service
  */
 export function handleApiError(error: unknown, fallbackMessage: string) {
-  console.error("API error:", error);
+  console.error("API error:", describeError(error));
 
   let status = 500;
   let message = fallbackMessage;
