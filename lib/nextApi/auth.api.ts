@@ -16,11 +16,16 @@ export interface MessageResponse {
   message: string;
 }
 
+export interface LoginResponse extends MessageResponse {
+  /** The account's email isn't confirmed: go to /confirm-email */
+  confirmEmail?: boolean;
+}
+
 export class AuthAPI {
   constructor(private client = nextAuthClient) {}
 
   async signup(
-    reqParams: SignupApiData
+    reqParams: SignupApiData,
   ): Promise<AxiosResponse<MessageResponse>> {
     return this.client.post("/signup", reqParams);
   }
@@ -29,12 +34,12 @@ export class AuthAPI {
     email,
     password,
     botDetection,
-  }: LoginApiData): Promise<AxiosResponse<MessageResponse>> {
+  }: LoginApiData): Promise<AxiosResponse<LoginResponse>> {
     return this.client.post("/login", { email, password, botDetection });
   }
 
   async resendConfirmation(
-    email: string
+    email: string,
   ): Promise<AxiosResponse<MessageResponse>> {
     return this.client.post("/resend-confirmation", { email });
   }

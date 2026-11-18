@@ -10,6 +10,8 @@ import { forwardClientIp } from "@/lib/utils/forward-client-ip";
 // Client-side: Falls back to API_URL (public URL through LB)
 export const authClient = new Api<{ token: string }>({
   baseURL: process.env.KONG_INTERNAL_URL || process.env.API_URL,
+  // Give up after 30 s instead of waiting forever (axios has no timeout)
+  timeout: 30_000,
   securityWorker: (securityData) => {
     return securityData?.token
       ? { headers: { Authorization: `Bearer ${securityData.token}` } }

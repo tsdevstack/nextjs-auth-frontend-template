@@ -20,11 +20,15 @@ export function LoginClient() {
     }
 
     try {
-      await authAPI.login({
+      const response = await authAPI.login({
         email,
         password,
         botDetection,
       });
+      if (response.data.confirmEmail) {
+        router.push("/confirm-email");
+        return;
+      }
 
       // Only redirect on success - validate callbackUrl is relative to prevent open redirect
       const callbackUrl = searchParams.get("callbackUrl");
